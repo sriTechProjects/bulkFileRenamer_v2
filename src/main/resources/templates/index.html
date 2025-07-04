@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Bulk File Renamer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3B82F6",
+              accent: "#E0F2FE",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-sky-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white w-[420px] rounded-2xl shadow-2xl px-8 py-10 flex flex-col items-center text-center space-y-6">
+      <!-- Logo and Title -->
+      <div class="flex items-center gap-3">
+        <img src="/open-folder.png" alt="folder" class="h-9 w-9" />
+        <h1 class="text-2xl font-extrabold text-gray-800">Bulk File Renamer</h1>
+      </div>
+
+      <p class="text-sm text-gray-600 -mt-2">Rename files smartly and fast</p>
+
+      <!-- Side-by-side Buttons -->
+      <div class="flex gap-4 w-full justify-center mt-2">
+        <!-- File Upload -->
+        <form id="fileForm" action="/uploadFiles" method="post" enctype="multipart/form-data">
+          <input type="file" id="fileInput" name="files" multiple class="hidden" />
+          <button
+            type="button"
+            onclick="document.getElementById('fileInput').click()"
+            class="flex flex-col items-center justify-center w-32 h-24 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow transition duration-200"
+          >
+            <img src="/google-docs.png" alt="Choose Files" class="h-6 w-6 mb-1" />
+            <span>Choose Files</span>
+          </button>
+        </form>
+
+        <!-- Folder Upload -->
+        <form id="folderForm" action="/uploadFolder" method="post" enctype="multipart/form-data">
+          <input type="file" id="folderInput" name="folderFiles" webkitdirectory directory multiple class="hidden" />
+          <button
+            type="button"
+            onclick="document.getElementById('folderInput').click()"
+            class="flex flex-col items-center justify-center w-32 h-24 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg shadow transition duration-200"
+          >
+            <img src="/open-folder.png" alt="Choose Folder" class="h-6 w-6 mb-1" />
+            <span>Choose Folder</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Features Grid -->
+      <div class="grid grid-cols-3 gap-4 mt-6">
+        <div class="bg-accent rounded-lg p-3 flex flex-col items-center shadow-sm">
+          <img src="/documents.png" class="h-6 w-6" alt="multi" />
+          <p class="text-xs mt-1 font-medium text-gray-700 text-center">
+            Multi-file
+            <br />
+            Support
+          </p>
+        </div>
+
+        <div class="bg-accent rounded-lg p-3 flex flex-col items-center shadow-sm">
+          <img src="/free-transform.png" class="h-6 w-6" alt="pattern" />
+          <p class="text-xs mt-1 font-medium text-gray-700 text-center">
+            Pattern-based
+            <br />
+            Preview
+          </p>
+        </div>
+
+        <div class="bg-accent rounded-lg p-3 flex flex-col items-center shadow-sm">
+          <img src="/file.png" class="h-6 w-6" alt="download" />
+          <p class="text-xs mt-1 font-medium text-gray-700 text-center">
+            Download
+            <br />
+            Renamed Files
+          </p>
+        </div>
+      </div>
+
+      <p class="text-xs text-gray-400 mt-6">© 2024</p>
+    </div>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        const folderInput = document.getElementById("folderInput");
+        const folderForm = document.getElementById("folderForm");
+
+        folderInput.addEventListener("change", function () {
+          if (this.files.length > 0) {
+            console.log("Folder selected:", this.files.length, "files.");
+            folderForm.submit(); // Ensures the correct form is submitted
+          } else {
+            console.log("No folder files selected.");
+          }
+        });
+
+        const fileInput = document.getElementById("fileInput");
+        const fileForm = document.getElementById("fileForm");
+
+        fileInput.addEventListener("change", function () {
+          if (this.files.length > 0) {
+            console.log("Files selected:", this.files.length);
+            fileForm.submit();
+          } else {
+            console.log("No files selected.");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
